@@ -5,16 +5,19 @@ import com.irostub.webhook.discord.dto.embed_message.Embed;
 import com.irostub.webhook.discord.dto.embed_message.Field;
 import com.irostub.webhook.discord.dto.embed_message.Footer;
 import com.irostub.webhook.whatap.dto.WhatapWebhookReceiveDto;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+@Slf4j
 public class WhatapToDiscordWebhookConvertor {
     private static final int COLOR = Color.ORANGE.getRGB();
     private static final String USERNAME = "상태 알림 봇";
     public static DiscordWebhookRequest toDiscordRequest (WhatapWebhookReceiveDto dto){
+        log.info("toDiscordRequest={}", dto);
         Field metricValue = new Field();
         metricValue.setName(dto.getMetricName());
         metricValue.setValue(dto.getMetricValue());
@@ -37,9 +40,11 @@ public class WhatapToDiscordWebhookConvertor {
     }
 
     private static String makeDescription(WhatapWebhookReceiveDto dto) {
-        final Long time = dto.getTime();
-        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format = sdf.format(time);
+        log.info("makeDescription={}", dto);
+        long time = dto.getTime();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String format = sdf.format(new Date(time));
 
         return "[" + format + "]" + dto.getMessage();
     }
