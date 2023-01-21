@@ -40,10 +40,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: delivery and deploy
-        uses: appleboy/ssh-action@v0.1.6
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.MASTER_HOST }}
           username: ${{ secrets.MASTER_USERNAME }}
           password: ${{ secrets.MASTER_PASSWORD }}
           port: ${{ secrets.MASTER_PORT }}
-          script: ${{ secrets.RUN }}
+          script: |
+            cd ${{ secrets.WEBHOOK_PATH }}
+            ${{ secrets.RUN }}
