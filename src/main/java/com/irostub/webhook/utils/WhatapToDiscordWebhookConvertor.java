@@ -40,7 +40,6 @@ public class WhatapToDiscordWebhookConvertor {
     }
 
     private static String makeDescription(WhatapWebhookReceiveDto dto) {
-        log.info("makeDescription={}", dto);
         long time = dto.getTime();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

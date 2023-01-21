@@ -1,5 +1,7 @@
 package com.irostub.webhook.whatap.mediator;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.irostub.webhook.config.AppConfig;
 import com.irostub.webhook.discord.dto.embed_message.DiscordWebhookRequest;
 import com.irostub.webhook.utils.WhatapToDiscordWebhookConvertor;
@@ -17,16 +19,13 @@ public class WhatapHookReceiveController {
     private final AppConfig appConfig;
     private final RestTemplate restTemplate;
 
-    @GetMapping("/discord/mediator")
-    public String check(){
-        log.info("sdfasdfasdfsadfsadfsadfasdfasdf");
-        return "whata";
-    }
-
     @PostMapping("/discord/mediator")
-    public String whatapToDiscordHook(@RequestBody WhatapWebhookReceiveDto whatapDto){
+    public String whatapToDiscordHook(@RequestBody WhatapWebhookReceiveDto whatapDto) throws JsonProcessingException {
         log.info("path=/whatap-json/discord/mediator, message={}", whatapDto);
         DiscordWebhookRequest discordWebhookRequest = WhatapToDiscordWebhookConvertor.toDiscordRequest(whatapDto);
+        ObjectMapper ob = new ObjectMapper();
+        String s = ob.writeValueAsString(discordWebhookRequest);
+        log.info(s);
         return restTemplate.postForObject(appConfig.getDiscord().getUrl(), discordWebhookRequest, String.class);
     }
 
