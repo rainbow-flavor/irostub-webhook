@@ -1,5 +1,6 @@
 package com.irostub.webhook.nas.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
@@ -9,8 +10,9 @@ public class NasWebhookReceiveDto {
     private ParsedMessage parsedMessage;
     private String message;
 
+    @JsonIgnore
     public ParsedMessage getParsedMessage(){
-        if (StringUtils.hasText(message)) {
+        if (StringUtils.hasText(message) == false) {
             return null;
         }
         String[] split = this.message.split(SEPARATOR);
