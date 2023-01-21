@@ -13,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class WhatapToDiscordWebhookConvertor {
     private static final int ORANGE = 12195340;
     private static final String USERNAME = "상태 알림 봇";

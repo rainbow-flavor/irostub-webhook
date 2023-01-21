@@ -1,9 +1,11 @@
 package com.irostub.webhook.discord.dto.embed_message;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Field {
     private String name;
     private String value;

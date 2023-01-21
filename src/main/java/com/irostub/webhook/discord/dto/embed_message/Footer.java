@@ -1,10 +1,12 @@
 package com.irostub.webhook.discord.dto.embed_message;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Footer {
     private String text;
     @JsonProperty("icon_url")

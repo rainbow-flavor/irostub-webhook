@@ -1,5 +1,6 @@
 package com.irostub.webhook.discord.dto.embed_message;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +50,7 @@ import java.util.List;
  */
 @Builder
 @Data
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DiscordWebhookRequest {
     private String content;
     private List<Embed> embeds = new ArrayList<>();

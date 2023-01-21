@@ -20,7 +20,7 @@ public class WhatapHookReceiveController {
     private final RestTemplate restTemplate;
 
     @PostMapping("/discord/mediator")
-    public String whatapToDiscordHook(@RequestBody WhatapWebhookReceiveDto whatapDto) throws JsonProcessingException {
+    public String whatapToDiscordHook(@RequestBody WhatapWebhookReceiveDto whatapDto) {
         DiscordWebhookRequest discordWebhookRequest = WhatapToDiscordWebhookConvertor.toDiscordRequest(whatapDto);
         return restTemplate.postForObject(appConfig.getDiscord().getUrl(), discordWebhookRequest, String.class);
     }
