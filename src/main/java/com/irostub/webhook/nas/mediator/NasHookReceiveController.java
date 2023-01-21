@@ -27,7 +27,7 @@ public class NasHookReceiveController {
 
     @PostMapping("/discord/mediator")
     public String nasToDiscordHook(@RequestBody NasWebhookReceiveDto dto) {
-        log.debug("nas message = {}", dto);
+        log.info("path=/nas/discord/mediator, message = {}", dto);
         NasWebhookReceiveDto.ParsedMessage parsedMessage = dto.getParsedMessage();
 
         Field time = new Field();
