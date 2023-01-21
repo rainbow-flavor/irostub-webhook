@@ -7,10 +7,13 @@ import com.irostub.webhook.discord.dto.embed_message.Field;
 import com.irostub.webhook.discord.dto.embed_message.Footer;
 import com.irostub.webhook.whatap.dto.WhatapWebhookReceiveDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class WhatapToDiscordWebhookConvertor {
@@ -18,6 +21,7 @@ public class WhatapToDiscordWebhookConvertor {
     private static final String USERNAME = "상태 알림 봇";
     public static DiscordWebhookRequest toDiscordRequest (WhatapWebhookReceiveDto dto){
         log.info("toDiscordRequest={}", dto);
+
         Field metricValue = new Field();
         metricValue.setName(dto.getMetricName());
         metricValue.setValue(dto.getMetricValue());
@@ -31,12 +35,18 @@ public class WhatapToDiscordWebhookConvertor {
                 .title(makeTitle(dto))
                 .footer(Footer.create(makeFooterText(dto), "https://i.imgur.com/eYpqeWR.png"))
                 .description(makeDescription(dto))
-                .fields(List.of(metricValue, metricThreshold))
+                .fields(makeField(List.of(metricValue, metricThreshold)))
                 .build();
         return DiscordWebhookRequest.builder()
                 .username(USERNAME)
                 .embeds(List.of(embed))
                 .build();
+    }
+
+    private static List<Field> makeField(List<Field> metricValue) {
+        return metricValue.stream()
+                .filter(f -> StringUtils.hasText(f.getName()))
+                .collect(Collectors.toList());
     }
 
     private static String makeDescription(WhatapWebhookReceiveDto dto) {
