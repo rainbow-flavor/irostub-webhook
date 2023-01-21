@@ -31,7 +31,6 @@ public class WhatapToDiscordWebhookConvertor {
                 .title(makeTitle(dto))
                 .footer(Footer.create(makeFooterText(dto), "https://i.imgur.com/eYpqeWR.png"))
                 .description(makeDescription(dto))
-                .timestamp(dto.getTime().toString())
                 .fields(List.of(metricValue, metricThreshold))
                 .build();
         return DiscordWebhookRequest.builder()
