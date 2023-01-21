@@ -21,11 +21,7 @@ public class WhatapHookReceiveController {
 
     @PostMapping("/discord/mediator")
     public String whatapToDiscordHook(@RequestBody WhatapWebhookReceiveDto whatapDto) throws JsonProcessingException {
-        log.info("path=/whatap-json/discord/mediator, message={}", whatapDto);
         DiscordWebhookRequest discordWebhookRequest = WhatapToDiscordWebhookConvertor.toDiscordRequest(whatapDto);
-        ObjectMapper ob = new ObjectMapper();
-        String s = ob.writeValueAsString(discordWebhookRequest);
-        log.info(s);
         return restTemplate.postForObject(appConfig.getDiscord().getUrl(), discordWebhookRequest, String.class);
     }
 

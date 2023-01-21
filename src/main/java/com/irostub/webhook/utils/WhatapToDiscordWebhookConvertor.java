@@ -1,5 +1,6 @@
 package com.irostub.webhook.utils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.irostub.webhook.discord.dto.embed_message.DiscordWebhookRequest;
 import com.irostub.webhook.discord.dto.embed_message.Embed;
 import com.irostub.webhook.discord.dto.embed_message.Field;
@@ -7,14 +8,14 @@ import com.irostub.webhook.discord.dto.embed_message.Footer;
 import com.irostub.webhook.whatap.dto.WhatapWebhookReceiveDto;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Slf4j
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class WhatapToDiscordWebhookConvertor {
-    private static final int COLOR = Color.ORANGE.getRGB();
+    private static final int ORANGE = 12195340;
     private static final String USERNAME = "상태 알림 봇";
     public static DiscordWebhookRequest toDiscordRequest (WhatapWebhookReceiveDto dto){
         log.info("toDiscordRequest={}", dto);
@@ -27,10 +28,11 @@ public class WhatapToDiscordWebhookConvertor {
         metricThreshold.setValue(dto.getMetricThreshold());
 
         Embed embed = Embed.builder()
-                .color(COLOR)
+                .color(ORANGE)
                 .title(makeTitle(dto))
-                .footer(Footer.create(makeFooterText(dto), null))
+                .footer(Footer.create(makeFooterText(dto), "https://i.imgur.com/eYpqeWR.png"))
                 .description(makeDescription(dto))
+                .timestamp(dto.getTime().toString())
                 .fields(List.of(metricValue, metricThreshold))
                 .build();
         return DiscordWebhookRequest.builder()
